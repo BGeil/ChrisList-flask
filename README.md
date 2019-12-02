@@ -52,7 +52,7 @@
 
 ![alt text](./img/Presents_Page.png)
 
-![alt text](./img/Show_Present_page.png)
+![alt text](./img/Show_Present_Page.png)
 
 ![alt text](./img/Add_Present_Modal.png)
 
