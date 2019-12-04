@@ -7,7 +7,7 @@ presents = Blueprint('presents', 'presents')
 
 # Index route
 @presents.route('/', methods=['GET'])
-def get_all_listings():
+def get_all_presents():
 	try:
 		query = models.Present.select().where(models.Present.user_id == current_user.id)
 		presents = [model_to_dict(presents) for presents in query]
@@ -38,7 +38,7 @@ def create_present():
 @presents.route('/<id>', methods=['GET'])
 def get_one_present(id):
 	print(id)
-	listings = models.Present.get_by_id(id)
+	presents = models.Present.get_by_id(id)
 
 
 #Update Route

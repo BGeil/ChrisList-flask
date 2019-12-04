@@ -38,8 +38,6 @@ def create_family():
 
 
 # This route will be a query search to search all users and list them out based on query
-
-
 @families.route('/', methods=['GET'])
 def get_users_families():
 	try:
@@ -55,20 +53,28 @@ def get_users_families():
 		[user['user_id'].pop('password') for user in users]
 
 
-		return jsonify(data=family_names, status={'code': 200, 'message': 'Successful'}), 200
+		return jsonify(data=families, status={'code': 200, 'message': 'Successful'}), 200
 	except models.DoesNotExist:
 		return jsonify(data={}, status={'code': 401, 'message': 'Error getting resources'}), 401
 	
 
-
-
-
-
-
 # This route will add family members to a family
+@families.route('/<user_id>', methods=['POST'])
+def add_users_to_families(user_id):
+	payload = request.get_json()
+	print(payload)
 
+	family_members = models.Family_Members.create(**payload,
+		user_id=user_id,
+		family_id=payload['family_name'])
 
-# @families.route('/', methods=['POST'])
+	print(family_members.__dict__)
+	print(dir(family_members))
+	print(model_to_dict(family_members), 'model to dict')
+
+	family_members_dict = model_to_dict(family_members)
+	return jsonify(data=family_members_dict, status={'code': 201, 'message': 'Success'})
+
 
 
 
