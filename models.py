@@ -1,15 +1,8 @@
 from peewee import *
+from datetime import datetime, timedelta
 from flask_login import UserMixin
 
-
 DATABASE = SqliteDatabase('chrislists.sqlite')
-
-# Users:
-
-# 	First Name
-# 	Last Name
-# 	Email
-# 	Password
 
 class User(UserMixin, Model):
 	first_name = CharField()
@@ -20,9 +13,7 @@ class User(UserMixin, Model):
 	class Meta:
 		database = DATABASE
 
-# Family:
 
-# 	family_name
 
 class Family_Name(Model):
 	family_name = CharField()
@@ -31,24 +22,14 @@ class Family_Name(Model):
 		database = DATABASE
 
 
-# Family_Members:
-
-# 	name = user.id
-# 	family = family.id
 
 class Family_Member(Model):
-	user.id = ForeignKeyField(User, backref='users')
-	family.id = ForeignKeyField(Family, backref='family_members')
+	user_id = ForeignKeyField(User, backref='users')
+	family_id = ForeignKeyField(Family_Name, backref='family_names')
 
-# Presents:
+	class Meta:
+		database = DATABASE
 
-# 	present_name
-# 	present_description
-# 	present_notes
-# 	present_price
-# 	present_bought
-# 	24hour_timer
-# 	user.id 
 
 class Present(Model):
 
@@ -57,8 +38,9 @@ class Present(Model):
 	present_notes = TextField()
 	present_price = IntegerField()
 	present_bought = BooleanField()
-	# 24hour_timer = IntegerField()
-	user.id = ForeignKeyField(User, backref='users')
+	present_added = DateTimeField(default=datetime.now())
+	present_final = DateTimeField(default=datetime.now()) + timedelta(days=1)
+	user_id = ForeignKeyField(User, backref='users')
 
 	class Meta:
 		database = DATABASE
