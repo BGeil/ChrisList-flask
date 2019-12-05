@@ -38,7 +38,7 @@ class Present(Model):
 	present_name = CharField()
 	present_description = CharField()
 	present_notes = TextField()
-	present_price = IntegerField()
+	present_price = CharField()
 	present_bought = BooleanField(default=False)
 	present_added = DateTimeField(default=datetime.now())
 	present_final = DateTimeField(default=datetime.now() + timedelta(days=1))
