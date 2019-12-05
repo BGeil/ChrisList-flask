@@ -7,12 +7,13 @@ DATABASE = SqliteDatabase('chrislists.sqlite')
 class User(UserMixin, Model):
 	first_name = CharField()
 	last_name = CharField()
+	age = CharField()
+	place_of_residence = CharField()
 	email = CharField(unique=True)
 	password = CharField()
 
 	class Meta:
 		database = DATABASE
-
 
 
 class Family_Name(Model):
@@ -24,11 +25,12 @@ class Family_Name(Model):
 
 
 class Family_Member(Model):
-	user_id = ForeignKeyField(User, backref='users')
 	family_id = ForeignKeyField(Family_Name, backref='family_names')
+	user_id = ForeignKeyField(User, backref='users')
 
 	class Meta:
 		database = DATABASE
+
 
 
 class Present(Model):
@@ -37,10 +39,11 @@ class Present(Model):
 	present_description = CharField()
 	present_notes = TextField()
 	present_price = IntegerField()
-	present_bought = BooleanField()
+	present_bought = BooleanField(default=False)
 	present_added = DateTimeField(default=datetime.now())
-	present_final = DateTimeField(default=datetime.now()) + timedelta(days=1)
+	present_final = DateTimeField(default=datetime.now() + timedelta(days=1))
 	user_id = ForeignKeyField(User, backref='users')
+	family_id = ForeignKeyField(Family_Name, backref='family_names')
 
 	class Meta:
 		database = DATABASE
